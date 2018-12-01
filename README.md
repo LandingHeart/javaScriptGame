@@ -1,3 +1,3 @@
-#MY FIRST GAME MADE WITH
-##JAVASCRIPT bootstrap css, and HTML
+# MY FIRST GAME MADE WITH
+## JAVASCRIPT bootstrap css, and HTML
 
