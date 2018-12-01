@@ -1,0 +1,10 @@
+.backgroundImage {
+    background-image: url("8bit.jpg");
+    padding: 30px;
+
+}
+#clockCounter{	
+	font-family: "Times New Roman", Times, serif;
+	font-size: 30px;
+	font-style: italic;
+}
