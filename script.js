@@ -5,27 +5,36 @@ var x, y = 0;
 
 var rand = 0;
 var random = 0;
-
+var seconds2 = 5;
 var walkable = false;
 var gameRuns = false;
 var fClickable = true;
 var myColor = false;
 var qClick = true;
 var a = 10;
-
-var seconds = 5;
+var round2Start = false;
+var seconds = 10;
 var aicounter = 5;
 var plcounter = 5;
+var countDown = 10;
 
 var interval;
 var aiInterval;
 var gStart;
-var l, r, d, u = 0;
+// var l, r, d, u = 0;
 
 var myscore = 0;
 var aiscore = 0;
 var finish = false;
+var xpress = false;
+
+var sac;
+var pl;
+var mov;
+var pMov;
+var superP;
 document.addEventListener('keydown', press);
+
 
 function setup() { //initialize everything
 
@@ -79,15 +88,42 @@ function startMiniGame(){
   // var c = setInterval(resetBowserPos, 5000);
 
   callMovement();
+  sac = setInterval(showAiScore, 50);
+  pl = setInterval(showPlayerScore, 50);
+
+}
+function countDownToSuperPower(){
+  if(countDown != 0){
+    countDown--;
+    if(countDown == 0){
+        window.alert("looks like you need some help to beat the AI, ill give you a cheat. Press X!!!");
+
+    }
+  }else {
+    clearInterval(superP);
+
+  }
+}
+
+function round2(){
+  finish = false;
+  round2Start = true;
+  p = 9;
+  g = 0;
+  setPrincessPos(p, g, "princess");
+  pMov = setInterval(princessMov, 100);
+  window.alert("round 2 starts!!! Facing two ai");
+  uperP = setInterval(countDownToSuperPower, 1000);
+
+   interval = setInterval(round2counter, 1000);
+  // var c = setInterval(resetBowserPos, 5000);
+
+  callMovement();
   var sac = setInterval(showAiScore, 50);
   var pl = setInterval(showPlayerScore, 50);
 
 }
-function round2(){
-  finish = false;
-  window.alert("round 2 starts!!! Facing two ai");
 
-}
 function reDrawMatrix(){
   walkable = true;
   fClickable = false;
@@ -221,7 +257,8 @@ function checkPosition(){
 
 function showAiScore(){
   if(seconds != 0){
-  var ai = document.getElementById("p4").innerHTML = checkPurple();
+    checkPurple();
+    document.getElementById("p4").innerHTML = aiscore;
 }else{
   clearInterval(sac);
 }
@@ -230,9 +267,10 @@ function showAiScore(){
 
 function showPlayerScore(){
   if(seconds != 0){
-    var pl = document.getElementById("p3").innerHTML = checkColor();
+    checkColor();
+    document.getElementById("p3").innerHTML = myscore
   }else{
-    clearInterval(playerScore);
+    clearInterval(pl);
   }
  
 
@@ -243,16 +281,18 @@ function press(e){//listening for key press
      
      if(walkable==true){
       aiBowserMoveUp();
+      // aiPrincessMoveRight();
       moveAi();
       moveUp();
      
    }
     
   }
-  else if ( e.keyCode === 68 /* d */){
+  else if (e.keyCode === 68 /* d */){
       
     if(walkable == true){
       aiBowserMoveLeft();
+
       moveAi();
       moveRight();
       
@@ -277,6 +317,14 @@ function press(e){//listening for key press
        
     }     
   }
+    else if(e.keyCode === 88 /** x */){
+      if(countDown == 0){
+       
+       if(xpress == false){
+        superPower();
+       }
+    }
+  }
   else if( e.keyCode === 70 /** f */){
     if(fClickable == true){
       fClick();
@@ -292,6 +340,7 @@ function press(e){//listening for key press
     }
     qClick = false;
   }
+ 
 }
 function moveAi(){
     if(randomM() == 1){
@@ -331,7 +380,7 @@ function movement(){
 }
 function callMovement(){
  
-   var mov = setInterval(movement, 300);
+   mov = setInterval(movement, 300);
 
     
   
@@ -377,6 +426,7 @@ function checkAiPos(){
     if(x <= -1){
       x++; 
       setBowserPos(x, y, "bowser");
+    
     }
 
     else if(x >= 10){
@@ -392,6 +442,29 @@ function checkAiPos(){
     else if(y < 0 ){
       y++;
       setBowserPos(x, y, "bowser");
+    }
+}
+
+function checkPrincessPos(){
+    if(p <= -1){
+      p++; 
+      setPrincessPos(p, g, "princess");
+    
+    }
+
+    else if(p >= 10){
+      p--;
+      setPrincessPos(p, g, "princess");
+    }
+
+    else if(g >= 15 ){
+      g--;
+      setPrincessPos(p, g, "princess");
+    }
+
+    else if(g < 0 ){
+      g++;
+      setPrincessPos(p, g, "princess");
     }
 }
 
@@ -423,6 +496,7 @@ function aiBowserMoveDown(){
   setBowserPos(x, y, "bowser");
   
 }
+
 function setBowser(){
   x = 0;
   y = 14;
@@ -444,8 +518,6 @@ function checkColor(){
       } 
     }
   
-  
-  return myscore;
 }
 
 function checkPurple(){
@@ -458,7 +530,7 @@ function checkPurple(){
       } 
     }    
   
-  return aiscore;
+
 }
 
 function counter(){
@@ -467,15 +539,39 @@ function counter(){
     counts.innerHTML = seconds--;
   }else{
     clearInterval(interval);
-     reset();
+    reset();
+    if(myscore > aiscore) {
+      window.alert("round 2 startes when you click ok");
+      myscore = 0; //reset score
+      aiscore = 0; 
+      round2();
+    }
+
   }
 
 }
+
+function round2counter(){
+  var counts = document.getElementById('clockCounter');
+  if(seconds > -1){
+    counts.innerHTML = seconds--;
+  }else{
+    clearInterval(interval);
+    clearInterval(pMov);
+    clearInterval(superP);
+    reset();
+
+  }
+
+}
+
+
+
 function checkScores(){
-  var aiscore = checkPurple();
-  var playerScore = checkColor();
-  window.alert("Your Score is: " + playerScore + "computer Score is: " + aiscore);
-  if(aiscore > playerScore ){
+  checkColor();  //upate myscore
+  checkPurple();  //update aiscore
+  window.alert("Your Score is: " + myscore + "computer Score is: " + aiscore);
+  if(aiscore > myscore ){
     window.alert("You lost");
   }else {
     window.alert("You win");
@@ -487,11 +583,64 @@ function reset(){
   setWalkable();
   reDrawMatrix();
   checkScores();
-  setTimeout(round2, 5000);
-  window.alert("round 2 is in 5 senconds");
-  
+  seconds = 10;
+  clearInterval(mov);
 }
 
+function princessMov(){
+    if(round2Start == true){
+
+          if(randomM() == 1){
+            aiPrincessMoveUp();
+            
+          }
+          else if(randomM() == 2){
+          aiPrincessMoveDown();
+          }
+          else if (randomM() == 3){
+           aiPrincessMoveLeft();
+          }
+          else if(randomM() == 4){
+            aiPrincessMoveRight();
+          }
+    }   
+}
+function superPower(){
+  for(v = 0; v < 10; v++){
+    for(h = 0; h < 8; h ++){
+      setButtonImage(v, h, "skyblue")
+    }
+  }
+  xpress = true;
+}
+function aiPrincessMoveLeft(){
+ 
+  setBlank(p, g, "purple");
+  g--;
+ checkPrincessPos();
+  setPrincessPos(p, g, "princess");
+  
+}
+function aiPrincessMoveRight(){
+  setBlank(p, g, "purple");
+  g++;
+  checkPrincessPos();
+  setPrincessPos(p, g, "princess");
+}
+function aiPrincessMoveUp(){
+  setBlank(p, g, "purple");
+  p--;
+checkPrincessPos();
+  setPrincessPos(p, g, "princess");
+  
+}
+function aiPrincessMoveDown(){
+  setBlank(p, g, "purple");
+  p++;
+ checkPrincessPos();
+  setPrincessPos(p, g, "princess");
+  
+}
 function setButtonImage(i, j, Image) {
   var button = document.getElementById("img_" + i + "_" + j);
   button.setAttribute("src", "images/" + Image + ".jpg");
@@ -569,8 +718,25 @@ function logLastClicked() {
     console.log(clickHistory[clickHistory.length - 1]);
   }
 }
-
-
+function fireWorks(){
+  gameRuns = false;
+  myColor = false;
+  finish = true;
+  for(n = 0; n< 10; n++){
+    for(m = 0; m< 15; m++){
+        setButtonImage(n, m, "white");
+      } 
+    }    
+  setTimeout(fireWorks2, 1000);
+}
+function fireWorks2(){
+  for(i = 0; i< 10; i++){
+    for(j = 0; j< 15; j++){
+      setInterval(setButtonImage(i, j, "8bitheart"), 50);
+    }
+  }
+  
+}
 
 function createButton(buttonText, styleClass, functionName) {
   var button = document.createElement("button");
@@ -599,7 +765,7 @@ function fillFunctionButtons() {
   var headDiv = document.getElementById("head");
   var funcBtnRow = createRow(); 
   funcBtnRow.appendChild(createButton("Start game", "btn btn-light m-3", "start()"));
-
+  funcBtnRow.appendChild(createButton("Fireworks", "btn btn-light m-3", "fireWorks()"));
   headDiv.appendChild(funcBtnRow);
 }
 
