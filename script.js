@@ -1,5 +1,4 @@
 var i, j = 0;
-var life = 3;
 var p, g = 0;
 var x, y = 0;
 
@@ -13,7 +12,7 @@ var myColor = false;
 var qClick = true;
 var a = 10;
 var round2Start = false;
-var seconds = 10;
+var seconds = 30;
 var aicounter = 5;
 var plcounter = 5;
 var countDown = 10;
@@ -55,6 +54,9 @@ function fillMatrix() {
     matrix.appendChild(newRow);
   }
 }
+function showInstruction(){
+  setStatusText("The goal is to obtain the most territory by coloring the most blocks.(My version of (Splatoon). One block is score of 1, and each block is counted at a rate of 0.0005 sec How to Play: Use WASD to move, Press Start Game to start the game. Click Q to go to first minigame, click f to select the game and start game.");
+}
 
 function start() { //STARTING THE GAME SETTING PLAYER POS
     i=4;
@@ -75,17 +77,11 @@ function start() { //STARTING THE GAME SETTING PLAYER POS
     
 }
 
-function start2() { //STARTING THE GAME SETTING PLAYER POS
-   alerta();
-
-}
-
-function startMiniGame(){
+function startMiniGame(){//STARTING THE GAME SETTING PLAYER POS
   setWalkable();
   reDrawMatrix();
 
   interval = setInterval(counter, 1000);
-  // var c = setInterval(resetBowserPos, 5000);
 
   callMovement();
   sac = setInterval(showAiScore, 50);
@@ -115,8 +111,7 @@ function round2(){
   window.alert("round 2 starts!!! Facing two ai");
   uperP = setInterval(countDownToSuperPower, 1000);
 
-   interval = setInterval(round2counter, 1000);
-  // var c = setInterval(resetBowserPos, 5000);
+  interval = setInterval(round2counter, 1000);
 
   callMovement();
   var sac = setInterval(showAiScore, 50);
@@ -583,7 +578,7 @@ function reset(){
   setWalkable();
   reDrawMatrix();
   checkScores();
-  seconds = 10;
+  seconds = 30;
   clearInterval(mov);
 }
 
@@ -732,7 +727,7 @@ function fireWorks(){
 function fireWorks2(){
   for(i = 0; i< 10; i++){
     for(j = 0; j< 15; j++){
-      setInterval(setButtonImage(i, j, "8bitheart"), 50);
+      setInterval(setButtonImage(i, j, "heart"), 50);
     }
   }
   
@@ -764,7 +759,8 @@ function setProgressBar(bar_id, Image, value) {
 function fillFunctionButtons() {
   var headDiv = document.getElementById("head");
   var funcBtnRow = createRow(); 
-  funcBtnRow.appendChild(createButton("Start game", "btn btn-light m-3", "start()"));
+  funcBtnRow.appendChild(createButton("Start game", "btn btn-dark m-3", "start()"));
+  funcBtnRow.appendChild(createButton("Instruction", "btn btn-dark m-3", "showInstruction()"));
   funcBtnRow.appendChild(createButton("Fireworks", "btn btn-light m-3", "fireWorks()"));
   headDiv.appendChild(funcBtnRow);
 }
