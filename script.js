@@ -1,26 +1,23 @@
-var i, j = 0;
-var p, g = 0;
-var x, y = 0;
+var i, j = 0;// player posistion i and j
+var p, g = 0;// ai position p g
+var x, y = 0;// ai pos x y
 
-var rand = 0;
+
 var random = 0;
-var seconds2 = 5;
+
 var walkable = false;
 var gameRuns = false;
 var fClickable = true;
 var myColor = false;
 var qClick = true;
-var a = 10;
+
 var round2Start = false;
-var seconds = 60;
-var aicounter = 5;
-var plcounter = 5;
-var countDown = 50;
+var seconds = 30;
+
+var countDown = 25;
 
 var interval;
 var aiInterval;
-var gStart;
-// var l, r, d, u = 0;
 
 var myscore = 0;
 var aiscore = 0;
@@ -32,6 +29,7 @@ var pl;
 var mov;
 var pMov;
 var superP;
+
 document.addEventListener('keydown', press);
 
 
@@ -94,7 +92,7 @@ function countDownToSuperPower(){
   if(countDown != 0){
     countDown--;
     if(countDown == 0){
-        window.alert("looks like you need some help to beat the AI, ill give you a cheat. Press X!!!");
+    window.alert("looks like you need some help to beat the AI, ill give you a cheat. Press X!!!");
 
     }
   }else {
@@ -254,7 +252,7 @@ function checkPosition(){
 
 function showAiScore(){
   if(seconds != 0){
-    checkPurple();
+    myAiScores();
     document.getElementById("p4").innerHTML = aiscore;
 }else{
   clearInterval(sac);
@@ -264,7 +262,7 @@ function showAiScore(){
 
 function showPlayerScore(){
   if(seconds != 0){
-    checkColor();
+    myPlayerScores();
     document.getElementById("p3").innerHTML = myscore
   }else{
     clearInterval(pl);
@@ -288,7 +286,7 @@ function press(e){//listening for key press
   else if (e.keyCode === 68 /* d */){
       
     if(walkable == true){
-      aiBowserMoveLeft();
+      aiBowserMoveLeft()
 
       moveAi();
       moveRight();
@@ -377,7 +375,7 @@ function movement(){
 }
 function callMovement(){
  
-   mov = setInterval(movement, 300);
+   mov = setInterval(movement, 800);
 
     
   
@@ -505,7 +503,8 @@ function setPeach(){
   setButtonImage(p, g, "princess");
 }
 
-function checkColor(){
+
+function myPlayerScores(){
  
   for(n = 0; n< 10; n++){
     for(m = 0; m< 15; m++){
@@ -517,7 +516,7 @@ function checkColor(){
   
 }
 
-function checkPurple(){
+function myAiScores(){
 
   for(n = 0; n< 10; n++){
     for(m = 0; m< 15; m++){
@@ -566,8 +565,8 @@ function round2counter(){
 
 
 function checkScores(){
-  checkColor();  //upate myscore
-  checkPurple();  //update aiscore
+  myPlayerScores();  //upate myscore
+  myAiScores();  //update aiscore
   window.alert("Your Score is: " + myscore + "computer Score is: " + aiscore);
   if(aiscore > myscore ){
     window.alert("You lost, refresh the page to try again.");
@@ -581,10 +580,10 @@ function reset(){
   setWalkable();
   reDrawMatrix();
   checkScores();
-  seconds = 60;
+  seconds = 30;
   clearInterval(mov);
 }
-
+ 
 function princessMov(){
     if(round2Start == true){
 
