@@ -644,19 +644,9 @@ function setButtonImage(i, j, Image) {
   button.setAttribute("alt", Image);
 }
 
-function setButtonText(i, j, text) {
-  var button = document.getElementById("text_" + i + "_" + j);
-  button.innerHTML = text;
-}
-
 function getButtonImage(i, j) {
   var img = document.getElementById("img_" + i + "_" + j);
   return img.getAttribute("alt");
-}
-
-function getButtonText(i, j) {
-  var text = document.getElementById("text_" + i + "_" + j);
-  return text.innerHTML;
 }
 
 function createRow(className) {
@@ -675,9 +665,6 @@ function fillStatusText() {
   infoTextRow.id = "infoText"; //set id of this element so we can change it later
   headDiv.appendChild(infoTextRow);
 }
-function getInfo(){
-  return infoTextRow.id;
-}
 
 function setStatusText(text, style) {
   var textDiv = document.getElementById("infoText");
@@ -690,31 +677,6 @@ function setStatusText(text, style) {
   textDiv.appendChild(newText);
 }
 
-function fillProgressBar() {
-  var headDiv = document.getElementById("head");
-  var progessRow = createRow("progress");
-  progress = 0;
-  var bar = createProgressBar("bar", "bg-success", progress);
-  progessRow.appendChild(bar);
-  headDiv.appendChild(progessRow);
-}
-function logAllHistory() {
-  if (clickHistory.length == 0) {
-    console.log("History is empty");
-    return;
-  }
-  for (i = 0; i < clickHistory.length; i++) {
-    console.log(clickHistory[i]);
-  }
-}
-
-function logLastClicked() {
-  if (clickHistory.length == 0) {
-    console.log("History is empty");
-  } else {
-    console.log(clickHistory[clickHistory.length - 1]);
-  }
-}
 function fireWorks(){
   gameRuns = false;
   myColor = false;
@@ -741,21 +703,6 @@ function createButton(buttonText, styleClass, functionName) {
   button.appendChild(document.createTextNode(buttonText));
   button.setAttribute("onclick", functionName);
   return button;
-}
-
-function createProgressBar(bar_id, Image, value) {
-  var bar = document.createElement("div");
-  bar.id = bar_id;
-  bar.className = "progress-bar " + Image;
-  bar.setAttribute("style", "width: " + value + "%");
-  return bar;
-}
-
-function setProgressBar(bar_id, Image, value) {
-  var bar = document.getElementById(bar_id);
-  bar.className = "progress-bar " + Image;
-  bar.setAttribute("style", "width: " + value + "%");
-  bar.innerHTML = value + "%";
 }
 
 function fillFunctionButtons() {
