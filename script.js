@@ -12,10 +12,10 @@ var myColor = false;
 var qClick = true;
 var a = 10;
 var round2Start = false;
-var seconds = 30;
+var seconds = 60;
 var aicounter = 5;
 var plcounter = 5;
-var countDown = 10;
+var countDown = 50;
 
 var interval;
 var aiInterval;
@@ -41,12 +41,14 @@ function setup() { //initialize everything
   fillStatusText();
   fillMatrix();
   draw();
+  setStatusText("Beat the AI for second round");
+
 
 }
 
 function fillMatrix() {
   var matrix = document.getElementById("grid");
-  for (i = 0; i < 10; i++) {
+  for (i = 0; i < 10; i++) {`    `
     var newRow = createRow("justify-content-md-center");
     for (j = 0; j < 15; j++) {
       newRow.appendChild(createDefaultButton(i, j));
@@ -555,6 +557,7 @@ function round2counter(){
     clearInterval(pMov);
     clearInterval(superP);
     reset();
+    window.alert("Game Finish Thank You for playing my Game");
 
   }
 
@@ -567,7 +570,7 @@ function checkScores(){
   checkPurple();  //update aiscore
   window.alert("Your Score is: " + myscore + "computer Score is: " + aiscore);
   if(aiscore > myscore ){
-    window.alert("You lost");
+    window.alert("You lost, refresh the page to try again.");
   }else {
     window.alert("You win");
   }
@@ -578,7 +581,7 @@ function reset(){
   setWalkable();
   reDrawMatrix();
   checkScores();
-  seconds = 30;
+  seconds = 60;
   clearInterval(mov);
 }
 
