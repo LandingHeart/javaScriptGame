@@ -1,1 +1,13 @@
 The game is to be continued... 
+Demo consent: I consent that my project can be use for demo for future students
+
+credits: Nintendo for making the character models.
+And this is better run on chrome because repl it is slow in processing the many different functions and methods. 
+
+This game is base on the game play of splatoon made by Nintendo. 
+
+
+
+Function:
+
+The most important function in my game is the press(), this give the user the ability to use WASD to move around the grid. As the player move each time the previouse grid box is set to a color. The color that was chosen mario is blue, and purple is for the Ai. I give the AI the ability to move by setting a interval and call the function moveAi(), callMovment(), moveAi will move the princess, callMovement() set the interval of the movement for bowser. And the movement() take in random numbers gererated by the random function and it is base on the random number for how the AI moves. And the showAiScore, and showPlayerScore function takes in the id of a html element and so this way we can project the score for the ai and the player. And the round2() function will start the second round facing two different AIs. 
